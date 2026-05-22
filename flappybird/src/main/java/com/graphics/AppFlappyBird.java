@@ -75,8 +75,10 @@ public class AppFlappyBird {
      * mostrando el nivel actual, los controles y los puntajes independientes de cada jugador.
      */
     private void actualizarTitulo() {
-        String tituloBase = "Flappy Bird | Nivel: " + game.nivel + " | P1 (Amarillo): " + game.jugador1.puntaje + " | P2 (Rojo): " + game.jugador2.puntaje;
-        
+        String tituloBase = "Flappy Bird | Nivel: " + game.nivel + 
+                            " | P1(Ama): " + game.jugador1.puntaje + 
+                            " | P2(Roj): " + game.jugador2.puntaje +
+                            " | P3(Ver): " + game.jugador3.puntaje;
         // El texto se adapta según el estado del Modelo (Game)
         if (!game.started) {
             GLFW.glfwSetWindowTitle(window, tituloBase + " | SPACE y W para empezar");
@@ -105,7 +107,6 @@ public class AppFlappyBird {
             // evita que el 'dt' sea enorme y los pájaros atraviesen las paredes.
             if (dt > 0.033f) dt = 0.033f;
 
-            // --- LA SANTA TRINIDAD DEL MOTOR DE JUEGO ---
             // 1. Escuchar al jugador
             inputManager.procesarInput(game);
             // 2. Calcular las matemáticas y la física

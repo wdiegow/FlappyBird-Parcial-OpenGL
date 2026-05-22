@@ -13,6 +13,8 @@ public class Pipe {
     // Bandera para el Jugador 2. ya que ambos pueden cruzar en tiempos distintos.
     public boolean puntuadaJ2;
 
+    public boolean puntuadaJ3;
+
     // Constante para el grosor de las tuberías, Se usa para dibujar los rectángulos y calcular la caja de colisiones.
     public static final float ANCHO = 0.18f;
     
@@ -27,5 +29,6 @@ public class Pipe {
         // Al nacer la tubería, ningún jugador la ha cruzado todavía, por lo que inician en false.
         this.puntuadaJ1 = false;
         this.puntuadaJ2 = false;
+        this.puntuadaJ3 = false;
     }
 }

@@ -35,7 +35,11 @@ public class Bird {
     // Aplica el impulso vertical con una validación previa para evitar "saltos zombie" post-mortem.
     public void saltar() {
         if (!muerto) { 
-            this.velY = IMPULSO_SALTO;
+            if (this.puntaje >= 3) {
+                this.velY = -IMPULSO_SALTO;
+            }else {
+                this.velY = IMPULSO_SALTO;
+            }
         }
     }
 }

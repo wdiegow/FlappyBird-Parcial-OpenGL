@@ -105,15 +105,15 @@ public class Renderer {
         };
         
         // Generación y configuración del VAO y VBO
-        vao = GL30.glGenVertexArrays();
-        GL30.glBindVertexArray(vao);
-        vbo = GL15.glGenBuffers();
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
+        vao = GL30.glGenVertexArrays(); //pide un id para un vao
+        GL30.glBindVertexArray(vao); //lo activa el vao
+        vbo = GL15.glGenBuffers(); //pide un id para un vbo
+        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo); //lo activa preparando que va ser un array
         
         // Transferencia de datos de la RAM (Java) a la VRAM (Tarjeta Gráfica)
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(vertices.length);
-        buffer.put(vertices).flip();
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(vertices.length); //crea el nuevo espacio en memoria
+        buffer.put(vertices).flip(); //mete los datos
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW); //lo manda a la vram
         
         // Le indicamos al Shader cómo leer estos vértices (3 floats por posición)
         GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 3 * Float.BYTES, 0);
@@ -137,7 +137,7 @@ public class Renderer {
         GL20.glUseProgram(programa);
         GL30.glBindVertexArray(vao);
 
-        // 3. Dibujamos los elementos estáticos en el fondo (Req. 2.4)
+        // 3. Dibujamos los elementos estáticos en el fondo 
         dibujarFondo();
 
         // 4. Dibujamos las tuberías calculando la parte superior e inferior del hueco
@@ -155,9 +155,10 @@ public class Renderer {
             }
         }
 
-        // 5. Dibujamos a los jugadores (si siguen vivos) usando arte compuesto (Req. 2.1)
+        // 5. Dibujamos a los jugadores 
         if (!game.jugador1.muerto) dibujarPajaroCompuesto(game.jugador1, 0.98f, 0.85f, 0.20f);
         if (!game.jugador2.muerto) dibujarPajaroCompuesto(game.jugador2, 0.98f, 0.35f, 0.20f);
+        if (!game.jugador3.muerto) dibujarPajaroCompuesto(game.jugador3, 0.20f, 0.80f, 0.20f); // Verde (NUEVO)
         
         // 6. Si ambos mueren, dibujamos la lápida en primer plano
         if (game.gameOver) dibujarGameOverArte();
@@ -184,12 +185,12 @@ public class Renderer {
     private void dibujarPajaroCompuesto(Bird pajaro, float rBase, float gBase, float bBase) {
         float px = pajaro.x; float py = pajaro.y;
         dibujarRect(px, py, 0.08f, 0.08f, rBase, gBase, bBase); // Cuerpo
-        dibujarRect(px - 0.05f, py - 0.01f, 0.03f, 0.04f, rBase * 0.7f, gBase * 0.7f, bBase * 0.7f); // Cola
-        dibujarRect(px + 0.05f, py + 0.01f, 0.04f, 0.03f, 1.0f, 0.5f, 0.0f); // Pico
-        dibujarRect(px + 0.02f, py + 0.02f, 0.025f, 0.025f, 1.0f, 1.0f, 1.0f); // Ojo (Fondo)
+        dibujarRect(px - 0.05f, py - 0.01f, 0.03f, 0.03f, rBase * 0.7f, gBase * 0.7f, bBase * 0.7f); // Cola
+        dibujarRect(px + 0.05f, py + 0.01f, 0.04f, 0.02f, 1.0f, 0.5f, 0.0f); // Pico
+        dibujarRect(px + 0.02f, py + 0.02f, 0.015f, 0.020f, 1.0f, 1.0f, 1.0f); // Ojo (Fondo)
         dibujarRect(px + 0.025f, py + 0.02f, 0.01f, 0.01f, 0.0f, 0.0f, 0.0f); // Pupila
         
-        // Animación dinámica del ala (Req. 2.1)
+       
         if (pajaro.velY > 0) dibujarRect(px - 0.01f, py - 0.03f, 0.04f, 0.02f, 1.0f, 1.0f, 1.0f); // Aleteo Abajo
         else dibujarRect(px - 0.01f, py + 0.01f, 0.04f, 0.02f, 1.0f, 1.0f, 1.0f); // Aleteo Arriba
     }
